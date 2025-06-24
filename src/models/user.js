@@ -25,19 +25,8 @@ const userSchema = new mongoose.Schema(
     // Engineer specific fields
     skills: [
       {
-        type: String,
-        enum: [
-          "React",
-          "Node.js",
-          "Python",
-          "Java",
-          "TypeScript",
-          "MongoDB",
-          "PostgreSQL",
-          "AWS",
-          "Docker",
-          "Kubernetes",
-        ],
+        type: String, // No enum here, allow any skill
+        trim: true,
       },
     ],
     seniority: {
