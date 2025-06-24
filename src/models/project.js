@@ -21,19 +21,8 @@ const projectSchema = new mongoose.Schema(
     },
     requiredSkills: [
       {
-        type: String,
-        enum: [
-          "React",
-          "Node.js",
-          "Python",
-          "Java",
-          "TypeScript",
-          "MongoDB",
-          "PostgreSQL",
-          "AWS",
-          "Docker",
-          "Kubernetes",
-        ],
+        type: String, // No enum here, allow any skill
+        trim: true,
       },
     ],
     teamSize: {
@@ -57,9 +46,10 @@ const projectSchema = new mongoose.Schema(
   }
 );
 
+// Check that endDate is after startDate
 projectSchema.pre("save", function (next) {
   if (this.endDate <= this.startDate) {
-    next(new Error("End date must be after start date"));
+    return next(new Error("End date must be after start date"));
   }
   next();
 });

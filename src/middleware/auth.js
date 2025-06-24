@@ -25,5 +25,4 @@ const isManager = (req, res, next) => {
   next();
 };
 
-module.exports = auth;
-module.exports.isManager = isManager;
+module.exports = { auth, isManager };
