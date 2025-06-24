@@ -6,6 +6,7 @@ const cors = require("cors");
 const authRouter = require("./routes/auth");
 const engineerRouter = require("./routes/engineers");
 const projectRouter = require("./routes/project");
+const assignmentRouter = require("./routes/assignment");
 
 const app = express();
 
@@ -32,6 +33,7 @@ app.use(cookieParser());
 app.use("/", authRouter);
 app.use("/", engineerRouter);
 app.use("/", projectRouter);
+app.use("/", assignmentRouter);
 
 app.get("/", (req, res) => {
   res.status(200).json({
