@@ -5,7 +5,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/app.js",
-    "dev": "nodemon src/app.js"
+    "dev": "nodemon src/app.js",
+    "build": "echo 'No build step required for Node.js backend'",
+    "prod": "NODE_ENV=production node src/app.js"
   },
   "author": "abhishek gupta",
   "license": "ISC",

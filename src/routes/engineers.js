@@ -29,7 +29,7 @@ engineerRouter.get("/getAllEngineers", auth, async (req, res) => {
   }
 });
 
-engineerRouter.get("engineer/:id/capacity", auth, async (req, res) => {
+engineerRouter.get("/engineer/:id/capacity", auth, async (req, res) => {
   try {
     const engineerId = req.params.id;
 
