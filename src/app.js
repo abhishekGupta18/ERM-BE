@@ -18,7 +18,8 @@ const corsOptions = {
       "http://localhost:5173",
       "http://localhost:3000",
       "http://localhost:4173", // Vite preview port
-      "http://localhost:8080"  // Alternative dev port
+      "http://localhost:8080",  // Alternative dev port
+      "https://your-frontend-url.onrender.com" // <-- Add your deployed frontend URL here
     ];
     // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
