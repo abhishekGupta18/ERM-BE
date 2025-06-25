@@ -19,7 +19,7 @@ const corsOptions = {
       "http://localhost:3000",
       "http://localhost:4173", // Vite preview port
       "http://localhost:8080",  // Alternative dev port
-      "https://your-frontend-url.onrender.com" // <-- Add your deployed frontend URL here
+      "https://erm-fe-six.vercel.app" // <-- Deployed frontend URL
     ];
     // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
