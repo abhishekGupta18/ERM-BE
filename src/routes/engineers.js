@@ -7,7 +7,7 @@ const { isManager, auth } = require("../middleware/auth");
 const engineerRouter = express.Router();
 
 // Get all engineers
-engineerRouter.get("getAllEngineers/", auth, async (req, res) => {
+engineerRouter.get("/getAllEngineers", auth, async (req, res) => {
   try {
     const { skills, seniority } = req.query;
     let query = { role: "engineer" };
@@ -90,7 +90,7 @@ engineerRouter.get("/:id/timeline", auth, async (req, res) => {
   }
 });
 
-engineerRouter.put("engineerProfile/:id", auth, async (req, res) => {
+engineerRouter.put("/engineerProfile/:id", auth, async (req, res) => {
   try {
     const engineerId = req.params.id;
     const { name, skills, seniority, maxCapacity } = req.body;

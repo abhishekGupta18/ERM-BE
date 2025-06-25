@@ -32,8 +32,8 @@ const projectSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["planning", "active", "completed"],
-      default: "planning",
+      enum: ["Planning", "Active", "Completed"],
+      default: "Planning",
     },
     managerId: {
       type: mongoose.Schema.Types.ObjectId,

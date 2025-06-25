@@ -1,6 +1,6 @@
 const express = require("express");
 const { body, validationResult } = require("express-validator");
-const Project = require("../models/Project");
+const Project = require("../models/project");
 const Assignment = require("../models/assignment");
 const User = require("../models/user");
 const { auth, isManager } = require("../middleware/auth");
@@ -75,11 +75,20 @@ projectRouter.post(
     auth,
     isManager,
     body("name").isLength({ min: 3 }).trim(),
-    body("description").isLength({ min: 10 }),
+    body("description").isLength({ min: 2 }),
     body("startDate").isISO8601(),
     body("endDate").isISO8601(),
     body("teamSize").isInt({ min: 1 }),
-    body("requiredSkills").isArray({ min: 1 }),
+    // Allow both string and array for requiredSkills
+    body("requiredSkills").custom((value) => {
+      if (Array.isArray(value) && value.length > 0) {
+        return true;
+      }
+      if (typeof value === "string" && value.trim().length > 0) {
+        return true;
+      }
+      throw new Error("Required skills must be a non-empty array or string");
+    }),
   ],
   async (req, res) => {
     try {
@@ -88,31 +97,29 @@ projectRouter.post(
         return res.status(400).json({ errors: errors.array() });
       }
 
-      const {
-        name,
-        description,
-        startDate,
-        endDate,
-        requiredSkills,
-        teamSize,
-        status,
-      } = req.body;
+      let { requiredSkills, ...otherFields } = req.body;
+
+      // Convert string to array if needed
+      if (typeof requiredSkills === "string") {
+        requiredSkills = requiredSkills
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean);
+      }
 
       // Validate dates
-      if (new Date(endDate) <= new Date(startDate)) {
+      if (new Date(otherFields.endDate) <= new Date(otherFields.startDate)) {
         return res
           .status(400)
           .json({ message: "End date must be after start date" });
       }
 
       const project = new Project({
-        name,
-        description,
-        startDate: new Date(startDate),
-        endDate: new Date(endDate),
+        ...otherFields,
         requiredSkills,
-        teamSize,
-        status: status || "planning",
+        startDate: new Date(otherFields.startDate),
+        endDate: new Date(otherFields.endDate),
+        status: otherFields.status || "planning",
         managerId: req.user.userId,
       });
 
@@ -130,7 +137,6 @@ projectRouter.post(
     }
   }
 );
-
 // Update project
 projectRouter.put(
   "/updateProject/:id",

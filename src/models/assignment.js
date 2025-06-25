@@ -28,14 +28,6 @@ const assignmentSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: [
-        "Developer",
-        "Tech Lead",
-        "Senior Developer",
-        "Junior Developer",
-        "DevOps Engineer",
-        "Full Stack Developer",
-      ],
       default: "Developer",
     },
   },
