@@ -375,4 +375,21 @@ function getColorByAllocation(allocation) {
   return "#7C3AED"; // Purple
 }
 
+
+// Get a single assignment by ID
+assignmentRouter.get("/getAssignment/:id", auth, async (req, res) => {
+  try {
+    const assignment = await Assignment.findById(req.params.id)
+      .populate("engineerId", "name email skills seniority")
+      .populate("projectId", "name status startDate endDate");
+    if (!assignment) {
+      return res.status(404).json({ message: "Assignment not found" });
+    }
+    res.json(assignment);
+  } catch (error) {
+    console.error("Get assignment error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 module.exports = assignmentRouter;
